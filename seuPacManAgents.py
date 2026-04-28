@@ -104,10 +104,15 @@ class MinimaxAgent(MultiAgentSearchAgent):
         #Aqui escolhemos a melhor AÇÃO (não só o valor) para o Pac-Man.
         #Iteramos sobre todas as ações legais e simulamos o que os
         #fantasmas fariam em resposta, escolhendo a ação de maior score.
-        bestAction = None
+
+        legalMoves = gameState.getLegalActions(0)  
+        if not legalMoves:                         
+            return Directions.STOP                
+
+        bestAction = legalMoves[0]                
         bestVal = -float('inf')
 
-        for action in gameState.getLegalActions(0):
+        for action in legalMoves:                
             successor = gameState.generateSuccessor(0, action)
             #O primeiro nível após a raiz é sempre um nó MIN (turno dos fantasmas)
             score = minValue(successor, 0, 1)
